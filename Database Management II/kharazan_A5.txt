@@ -1,0 +1,135 @@
+
+
+---------------------- Assignment 5 -------- Database Management II ------------------
+
+Download  the  script  CreateMyGuitarShop(available  on  canvas),execute  the 
+script and study the structure of the database created.
+2. Write a script that declares a variable and sets it to the count of all products in 
+the Products table. If the count is greater than or equal to 7, the script should 
+display a message that says, “The number of products is greater than or equal 
+to 7”. Otherwise, it should say, “The number of products is less than 7”.
+3. Write a script that uses two variables to store (1) the count of all of the products 
+in  the  Products  table  and  (2)  the  average  list  price  for  those  products.  If  the 
+product count is greater than or equal to 7, the script should print a message that 
+displays  the  values  of  both  variables.  Otherwise,  the  script  should  print  a 
+message that says, “The number of products is less than 7”.
+4. Write a script that calculates the common factors between 10 and 20. To find a 
+common  factor,  you  can  use  the  modulo  operator  (%)  to  check  whether  a 
+number can be evenly divided into both numbers. Then, this script should print 
+lines that display the common factors like this: 
+Common factors of 10 and 20
+1
+2
+5
+5. Write a script that attempts to insert a new category named “Guitars” into the 
+Categories  table.  If  the  insert  is  successful,  the  script  should  display  this 
+message:
+SUCCESS: Record was inserted.
+If the insert is unsuccessful, the script should display a message something like 
+this:
+FAILURE: Record was not inserted.
+Error 2627: Violation of UNIQUE KEY constraint 
+'UQ__Categori__8517B2E0A87CE853'. Cannot insert duplicate 
+key in object 'dbo.Categories'. The duplicate key value is 
+(Guitars).
+6. Excecute each of the scripts(2-5) and take a screenshot of the results.
+7. Save all  scripts(text  and not screen shots) with their corresponding output in a single 
+file and submit on canvas.
+
+
+---------------------------
+
+kharazan_A5
+
+12/05/2022
+
+1.
+CreateMyGuitarShop Script -------------------------
+SQL Code:
+
+
+declare @count_products_var int
+select @count_products_var = count(productId) FROM products;
+if @count_products_var >= 7
+Begin
+    Print 'The number of products is greater than or equal to 7'
+End
+else
+Begin
+    Print 'The number of products less than 7'
+End
+
+Output:
+The number of products is greater than or equal to 7
+
+
+2.
+CreateMyGuitarShop Script -------------------------
+SQL Code:
+
+declare @count_products_var int
+declare @avg_list_price_var decimal
+select @count_products_var = count(productId), @avg_list_price_var = AVG(ListPrice)  FROM products;
+if @count_products_var >= 7
+Begin
+    Print 'The number of products is '+ cast (@count_products_var as varchar(5)) + ' and the average of list price is '+ cast(@avg_list_price_var as varchar(5))
+End
+else
+Begin
+    Print 'The number of products less than 7'
+End
+
+Output:
+The number of products is 10 and the average of list price is 842
+
+
+
+3.
+CreateMyGuitarShop Script -------------------------
+SQL Code:
+
+
+DECLARE @num1 int = 10;
+DECLARE @num2 int = 20;
+DECLARE @count int = 1;
+
+print 'Common factors of 10 and 20'
+while @count < @num1
+Begin
+If (@num1 % @count = 0 and @num2 % @count = 0)
+print @count
+set @count = @count + 1
+end
+
+Output:
+
+Common factors of 10 and 20
+1
+2
+5
+
+
+
+4.
+CreateMyGuitarShop Script -------------------------
+SQL Code:
+
+
+
+BEGIN TRY
+    INSERT INTO Categories (CategoryName)
+    VALUES ('Guitars')
+    PRINT 'SUCCESS: Record was inserted.'
+END TRY
+BEGIN CATCH
+    print 'FAILURE: Record was not inserted.';
+    print 'Error ' + CONVERT(VARCHAR, ERROR_NUMBER(), 1) + ': '+ ERROR_MESSAGE()
+END CATCH
+
+Output:
+
+FAILURE: Record was not inserted.
+Error 2627: Violation of UNIQUE KEY constraint 'UQ__Categori__8517B2E042B82823'. 
+Cannot insert duplicate key in object 'dbo.Categories'. 
+The duplicate key value is (Guitars).
+
